@@ -1,0 +1,21 @@
+# Configuración para el sistema de trading con RL - Fase 1
+
+# Parámetros básicos del entorno
+environment:
+  window_size: 20  # Tamaño de la ventana de observación
+  commission: 0.001  # Comisión por operación (0.1%)
+  initial_balance: 10000  # Balance inicial
+
+# Configuración de datos
+data:
+  symbol: "BTC-USD"  # Símbolo a operar
+  source: "yahoo"  # Fuente de datos (yahoo, csv)
+  start_date: "2020-01-01"  # Fecha de inicio
+  end_date: "2023-01-01"  # Fecha de fin
+  train_test_split: 0.8  # Proporción de datos para entrenamiento
+
+# Configuración de logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  save_dir: "./logs"
