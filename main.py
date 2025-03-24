@@ -8,6 +8,7 @@ from typing import Dict, List, Tuple, Optional, Union
 
 # Importar componentes del proyecto
 from Utils.helpers import normalize_data, calculate_sharpe_ratio, plot_equity_curve
+from Data.data_loader import DataLoader
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -27,7 +28,7 @@ def load_config(config_path: str) -> Dict:
     return config
 
 def main():
-    """Función principal para demostrar la infraestructura básica."""
+    """Función principal para demostrar el sistema de datos (Fase 2)."""
     # Cargar configuración
     config_path = os.path.join(os.path.dirname(__file__), 'Config', 'config.yaml')
     config = load_config(config_path)
@@ -35,24 +36,45 @@ def main():
     logger.info("Configuración cargada correctamente")
     logger.info(f"Símbolo configurado: {config['data']['symbol']}")
     
-    # Demostrar funciones de normalización
-    data = np.random.randn(100, 5)  # Datos aleatorios para demostración
-    normalized_data = normalize_data(data, method='zscore')
+    # Crear instancia del DataLoader
+    logger.info("Inicializando DataLoader...")
+    data_loader = DataLoader(config_path)
     
-    logger.info(f"Datos originales: Media={np.mean(data):.4f}, Std={np.std(data):.4f}")
-    logger.info(f"Datos normalizados: Media={np.mean(normalized_data):.4f}, Std={np.std(normalized_data):.4f}")
+    # Cargar datos
+    logger.info("Cargando datos...")
+    data = data_loader.load_data()
+    logger.info(f"Datos cargados: {len(data)} filas")
     
-    # Demostrar cálculo de métricas financieras
-    returns = np.random.normal(0.001, 0.02, 252)  # Retornos aleatorios para demostración
-    sharpe = calculate_sharpe_ratio(returns)
+    # Preprocesar datos
+    logger.info("Preprocesando datos...")
+    processed_data = data_loader.preprocess_data(data)
+    logger.info(f"Datos preprocesados: {len(processed_data)} filas")
     
-    logger.info(f"Ratio de Sharpe calculado: {sharpe:.4f}")
+    # Dividir en conjuntos de entrenamiento y prueba
+    logger.info("Dividiendo datos en conjuntos de entrenamiento y prueba...")
+    train_data, test_data = data_loader.get_data(split=True)
+    logger.info(f"Conjunto de entrenamiento: {len(train_data)} filas")
+    logger.info(f"Conjunto de prueba: {len(test_data)} filas")
     
-    # Demostrar visualización
-    equity = 10000 * (1 + np.cumsum(returns))
-    plot_equity_curve(equity, title="Curva de Equity de Demostración")
+    # Normalizar datos
+    logger.info("Normalizando datos...")
+    normalized_data = data_loader.normalize_data(train_data)
+    logger.info("Datos normalizados correctamente")
     
-    logger.info("Demostración de infraestructura básica completada")
+    # Visualizar algunos datos
+    if 'close' in train_data.columns:
+        plt.figure(figsize=(12, 6))
+        plt.plot(train_data['timestamp'], train_data['close'], label='Precio de cierre (train)')
+        if 'close' in test_data.columns:
+            plt.plot(test_data['timestamp'], test_data['close'], label='Precio de cierre (test)')
+        plt.title(f"Datos de {config['data']['symbol']}")
+        plt.xlabel('Fecha')
+        plt.ylabel('Precio')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    
+    logger.info("Demostración del sistema de datos completada")
 
 if __name__ == "__main__":
     main()

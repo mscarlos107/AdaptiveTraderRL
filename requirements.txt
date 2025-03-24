@@ -1,9 +1,10 @@
-# Requisitos para la Fase 1: Infraestructura Base
+# Requisitos para la Fase 2: Sistema de Datos
 numpy>=1.20.0
 pandas>=1.3.0
 matplotlib>=3.4.0
 seaborn>=0.11.0
 pyyaml>=6.0
+yfinance>=0.1.70
 
 # Requisitos para fases futuras (comentados)
-#
+# gymnasium>=0.28.0  # Para la Fase 3: Entorno de Trading

@@ -1,4 +1,4 @@
-# Trading Adaptativo con Aprendizaje por Refuerzo - Fase 1
+# Trading Adaptativo con Aprendizaje por Refuerzo - Fase 2: Sistema de Datos
 
 ## Descripción General del Proyecto
 
@@ -95,8 +95,59 @@ Funciones de utilidad para el procesamiento de datos y visualización:
 pip install -r requirements.txt
 ```
 
-## Próximas Fases
+## Descripción de la Fase 2: Sistema de Datos
 
-- **Fase 2**: Implementación del entorno de trading y carga de datos
-- **Fase 3**: Implementación del agente DQN y entrenamiento
-- **Fase 4**: Evaluación, visualización y optimización
+Esta fase implementa el sistema de carga y procesamiento de datos para el sistema de aprendizaje por refuerzo. Se centra en:
+
+1. Cargar datos financieros de diferentes fuentes (Yahoo Finance, CSV)
+2. Preprocesar los datos calculando indicadores técnicos
+3. Dividir los datos en conjuntos de entrenamiento y prueba
+4. Normalizar los datos para su uso posterior
+
+## Estructura del Proyecto (Fase 2)
+
+```
+Fase2/
+│
+├── Agents/
+│   └── .gitkeep           # Directorio para futuros agentes de RL (Fase 3)
+│
+├── Config/
+│   └── config.yaml        # Archivo de configuración actualizado
+│
+├── Data/
+│   └── data_loader.py     # Carga y preprocesamiento de datos financieros
+│
+├── Environments/
+│   └── .gitkeep           # Directorio para entornos de trading (Fase 3)
+│
+├── Utils/
+│   └── helpers.py         # Funciones de utilidad básicas
+│
+├── main.py                # Script principal con demostración de Fase 2
+│
+├── requirements.txt       # Dependencias actualizadas
+│
+└── README.md              # Este archivo
+```
+
+## Componentes Implementados en la Fase 2
+
+### Cargador de Datos (Data/data_loader.py)
+
+Clase para cargar y preprocesar datos financieros de diferentes fuentes:
+
+- **Carga de datos**: Implementa métodos para cargar datos desde Yahoo Finance y archivos CSV.
+- **Preprocesamiento**: Calcula indicadores técnicos como medias móviles, RSI, MACD y Bandas de Bollinger.
+- **División de datos**: Divide los datos en conjuntos de entrenamiento y prueba según la configuración.
+- **Normalización**: Proporciona métodos para normalizar los datos utilizando diferentes técnicas.
+
+### Script Principal (main.py)
+
+Implementa la funcionalidad para demostrar el sistema de datos:
+
+- Carga de datos financieros desde diferentes fuentes
+- Preprocesamiento de datos con cálculo de indicadores técnicos
+- División de datos en conjuntos de entrenamiento y prueba
+- Normalización de datos para su uso posterior
+- Visualización básica de los datos cargados

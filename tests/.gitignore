@@ -1,0 +1,12 @@
+# Archivos temporales de pytest
+__pycache__/
+.pytest_cache/
+
+# Archivos de cobertura
+.coverage
+htmlcov/
+
+# Archivos temporales generados durante las pruebas
+test_data/
+*.tmp
+*.temp
